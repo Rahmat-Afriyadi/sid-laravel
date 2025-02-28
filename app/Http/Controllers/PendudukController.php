@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Penduduk\PendudukStoreRequest;
+use App\Http\Requests\Penduduk\PendudukUpdateRequest;
 use App\Models\Desa;
 use App\Models\Penduduk;
 use Illuminate\Http\Request;
@@ -11,6 +13,28 @@ use Illuminate\Support\Facades\DB;
 class PendudukController extends Controller
 {
     //
+
+    public function store(PendudukStoreRequest $request)
+    {
+        $data = $request->validated();
+        Penduduk::create($data);
+
+        return response()->json(['message' => 'Data berhasil disimpan']);
+    }
+
+    public function update(PendudukUpdateRequest $request, Penduduk $penduduk)
+    {
+        $validatedData = $request->validated();
+        $penduduk->update($validatedData);
+
+        return response()->json([
+            'message' => 'Data berhasil diperbarui',
+            'data' => $penduduk
+        ]);
+    }
+
+
+
     public function grafikByAgama()
     {
 

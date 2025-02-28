@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Http\Requests\Penduduk;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class PendudukStoreRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'nik' => 'nullable|string|unique:penduduks,nik',
+            'nama' => 'required|string|max:255',
+            'jenis_kelamin' => 'required|in:L,P',
+            'tempat_lahir' => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date',
+            'agama' => 'required|in:Islam,Kristen,Katolik,Hindu,Buddha,Konghucu,Lainnya',
+            'status_perkawinan' => 'required|in:Belum Kawin,Kawin,Cerai Hidup,Cerai Mati',
+            'alamat_kantor' => 'required|string',
+            'rt' => 'nullable|string|max:10',
+            'rw' => 'nullable|string|max:10',
+            'desa_id' => 'required|exists:desas,id',
+            'pendidikan_id' => 'nullable|exists:pendidikans,id',
+            'pekerjaan_id' => 'nullable|exists:pekerjaans,id',
+        ];
+    }
+}
