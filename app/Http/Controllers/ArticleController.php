@@ -9,6 +9,7 @@ use App\Models\Article;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ArticleController extends Controller
 {
@@ -27,7 +28,7 @@ class ArticleController extends Controller
         $data = $request->validated();
 
         // Upload banner dan simpan path-nya
-        $user = auth()->user();
+        $user = JWTAuth::parseToken()->authenticate();
         $path = $request->file('banner')->store('banners', 'public');
         $data['banner'] = Storage::url($path);
         $data['author'] = $user->name;

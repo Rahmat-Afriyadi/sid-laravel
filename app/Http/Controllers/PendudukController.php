@@ -25,7 +25,7 @@ class PendudukController extends Controller
 
     public function detail_count()
     {
-        $user = auth()->user();
+        $user = JWTAuth::parseToken()->authenticate();
         $countPenduduk = DB::table('penduduks')
             ->where('desa_id', '=', $user->desa_id) // Filter jika diperlukan
             ->count();
@@ -38,7 +38,7 @@ class PendudukController extends Controller
 
     public function store(PendudukStoreRequest $request)
     {
-        $user = auth()->user();
+        $user = JWTAuth::parseToken()->authenticate();
         $data = $request->validated();
         $validatedData["desa_id"] = $user->desa_id;
         Penduduk::create($data);
@@ -48,7 +48,7 @@ class PendudukController extends Controller
 
     public function update(PendudukUpdateRequest $request, Penduduk $penduduk)
     {
-        $user = auth()->user();
+        $user = JWTAuth::parseToken()->authenticate();
         $validatedData = $request->validated();
         $validatedData["desa_id"] = $user->desa_id;
         $penduduk->update($validatedData);
