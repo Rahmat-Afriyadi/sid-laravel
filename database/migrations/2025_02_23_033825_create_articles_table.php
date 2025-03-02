@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string("banner");
+            $table->string("title");
             $table->string("author");
             $table->date("tgl_publikasi");
             $table->longText("content");

@@ -5,7 +5,7 @@ namespace App\Http\Requests\Article;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ArticleUpdateRequest extends FormRequest
+class ArticleUpdateBannerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,12 @@ class ArticleUpdateRequest extends FormRequest
     {
         return [
             //
-            'id' => ['required', 'integer', Rule::exists('articles', 'id')],
-            'title' => 'required|string',
-            'content' => 'required|string',
-            'kategori_id' => 'nullable|exists:kategori_articles,id',
+            'banner' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
+    }
+
+    public function wantsJson()
+    {
+        return true; // Force JSON response
     }
 }

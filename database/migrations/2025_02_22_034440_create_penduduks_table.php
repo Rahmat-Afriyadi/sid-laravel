@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('penduduks', function (Blueprint $table) {
             $table->id();
             $table->string('nik')->unique()->nullable();
+            $table->string('kk')->nullable();
             $table->string('nama');
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu', 'Lainnya']);
             $table->enum('status_perkawinan', ['Belum Kawin', 'Kawin', 'Cerai Hidup', 'Cerai Mati']);
-            $table->mediumText('alamat_kantor');
             $table->string('rt')->nullable();
             $table->string('rw')->nullable();
             $table->unsignedBigInteger('desa_id');

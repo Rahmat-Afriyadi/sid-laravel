@@ -17,9 +17,15 @@ class PendudukSeeder extends Seeder
     {
         //
         $faker = Faker::create('id_ID');
+        $lisKK = [];
+        $a=1;
+        while ($a <= 30) {
+            array_push($lisKK, $faker->unique()->numerify('################'));
+            $a += 1;
+        }
         $desa = Desa::create([
             "desa"=>"Slipi",
-            "alamat_kantor"=>"Jalan S Parman Kav 69",
+            "alamat_kantor"=>$faker->address,
             'kodepos' => $faker->postcode,
             'telepon' => $faker->phoneNumber,
             'email' => $faker->unique()->safeEmail,
@@ -40,13 +46,13 @@ class PendudukSeeder extends Seeder
             $randomNumber = rand(1, 10);
             DB::table('penduduks')->insert([
                 'nik' => $faker->unique()->numerify('################'),
+                'kk'=>$lisKK[rand(0,29)],
                 'nama' => $faker->name,
                 'jenis_kelamin' => $faker->randomElement(['L', 'P']),
                 'tempat_lahir' => $faker->city,
                 'tanggal_lahir' => $faker->date('Y-m-d', '2005-12-31'),
                 'agama' => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu', 'Lainnya']),
                 'status_perkawinan' => $faker->randomElement(['Belum Kawin', 'Kawin', 'Cerai Hidup', 'Cerai Mati']),
-                'alamat_kantor' => $faker->address,
                 'desa_id' => $desa->id,
                 'pendidikan_id' => $randomNumber,
                 'pekerjaan_id' => $randomNumber,

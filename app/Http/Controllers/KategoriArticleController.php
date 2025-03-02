@@ -10,6 +10,26 @@ use Illuminate\Http\Request;
 class KategoriArticleController extends Controller
 {
     //
+    public function index(Request $request)
+    {
+        return KategoriArticle::paginate(10); // Menampilkan 10 artikel per halaman
+    }
+
+    public function show(KategoriArticle $kategori)
+    {
+        return $kategori; // Menampilkan 10 artikel per halaman
+    }
+
+    public function options()
+    {
+        $data = KategoriArticle::get();
+        $res = [];
+        foreach ($data as $key => $v) {
+            array_push($res,["id"=>$v->id,"label"=>$v->nama]);
+        }
+        return response()->json($res);
+    }
+
     public function store(KategoriArticleStoreRequest $request)
     {
         $data = $request->validated();

@@ -25,6 +25,9 @@ Route::prefix('desa')->middleware([JwtMiddleware::class])->group(function () {
 });
 
 Route::prefix('penduduk')->middleware([JwtMiddleware::class])->group(function () {
+    Route::get('', [PendudukController::class, 'index']);
+    Route::get('/{penduduk}', [PendudukController::class, 'show']);
+    Route::get('/detail/count', [PendudukController::class, 'detail_count']);
     Route::put('update/{penduduk}', [PendudukController::class, 'update']);
     Route::post('store', [PendudukController::class, 'store']);
     Route::get('grafik/agama', [PendudukController::class, 'grafikByAgama']);
@@ -36,10 +39,16 @@ Route::prefix('penduduk')->middleware([JwtMiddleware::class])->group(function ()
 });
 
 Route::prefix('pekerjaan')->middleware([JwtMiddleware::class])->group(function () {
+    Route::get('', [PekerjaanController::class, 'index']);
+    Route::get('{pekerjaan}', [PekerjaanController::class, 'show']);
+    Route::get('options', [PekerjaanController::class, 'options']);
     Route::put('update/{pekerjaan}', [PekerjaanController::class, 'update']);
     Route::post('store', [PekerjaanController::class, 'store']);
 });
 Route::prefix('pendidikan')->middleware([JwtMiddleware::class])->group(function () {
+    Route::get('', [PendidikanController::class, 'index']);
+    Route::get('{pendidikan}', [PendidikanController::class, 'show']);
+    Route::get('options', [PendidikanController::class, 'options']);
     Route::put('update/{pendidikan}', [PendidikanController::class, 'update']);
     Route::post('store', [PendidikanController::class, 'store']);
 });
@@ -48,10 +57,16 @@ Route::prefix('geografis')->middleware([JwtMiddleware::class])->group(function (
     Route::post('store', [GeografiController::class, 'store']);
 });
 Route::prefix('article')->middleware([JwtMiddleware::class])->group(function () {
+    Route::get('', [ArticleController::class, 'index']);
+    Route::get('{article}', [ArticleController::class, 'show']);
     Route::put('update/{article}', [ArticleController::class, 'update']);
+    Route::put('update/banner/{article}', [ArticleController::class, 'updateBanner']);
     Route::post('store', [ArticleController::class, 'store']);
 });
 Route::prefix('kategori-article')->middleware([JwtMiddleware::class])->group(function () {
+    Route::get('', [KategoriArticleController::class, 'index']);
+    Route::get('{kategori}', [KategoriArticleController::class, 'show']);
+    Route::get('options', [KategoriArticleController::class, 'options']);
     Route::put('update/{kategori_article}', [KategoriArticleController::class, 'update']);
     Route::post('store', [KategoriArticleController::class, 'store']);
 });

@@ -24,8 +24,7 @@ class ArticleStoreRequest extends FormRequest
         return [
             //
             'banner' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'author' => 'required|string|max:255',
-            'tgl_publikasi' => 'required|date',
+            'title' => 'string',
             'content' => 'required|string',
             'kategori_id' => 'nullable|exists:kategori_articles,id',
         ];

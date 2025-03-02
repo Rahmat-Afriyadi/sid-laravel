@@ -13,10 +13,34 @@ use Illuminate\Support\Facades\DB;
 class PendudukController extends Controller
 {
     //
+    public function index(Request $request)
+    {
+        return Penduduk::paginate(10); // Menampilkan 10 artikel per halaman
+    }
+
+    public function show(Penduduk $penduduk)
+    {
+        return $penduduk; // Menampilkan 10 artikel per halaman
+    }
+
+    public function detail_count()
+    {
+        $user = auth()->user();
+        $countPenduduk = DB::table('penduduks')
+            ->where('desa_id', '=', $user->desa_id) // Filter jika diperlukan
+            ->count();
+        $totalUniqueNIK = DB::table('penduduks')
+            ->where('desa_id', $user->desa_id) // Sesuaikan dengan desa_id yang ingin dicari
+            ->distinct('kk')
+            ->count('kk');
+        return ["count_penduduk"=>$countPenduduk,"count_kk"=>$totalUniqueNIK]; // Menampilkan 10 artikel per halaman
+    }
 
     public function store(PendudukStoreRequest $request)
     {
+        $user = auth()->user();
         $data = $request->validated();
+        $validatedData["desa_id"] = $user->desa_id;
         Penduduk::create($data);
 
         return response()->json(['message' => 'Data berhasil disimpan']);
@@ -24,7 +48,9 @@ class PendudukController extends Controller
 
     public function update(PendudukUpdateRequest $request, Penduduk $penduduk)
     {
+        $user = auth()->user();
         $validatedData = $request->validated();
+        $validatedData["desa_id"] = $user->desa_id;
         $penduduk->update($validatedData);
 
         return response()->json([
